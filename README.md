@@ -401,9 +401,9 @@ devops-ecommerce-platform/
 ## 📧 Contact
 
 **Tanisha**
-- GitHub: [@tanikush](https://github.com/tanikush)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+- GitHub: (https://github.com/tanikush)
+- LinkedIn: (https://www.linkedin.com/in/tanisha-kushwah-280944284/)
+- Email: tanisha206guttu@gmail.com
 
 ---
 
