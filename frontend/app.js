@@ -8,13 +8,13 @@ let cart = [];
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     updateCartCount();
-    
+
     // Initialize Bootstrap tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
-    
+
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -123,7 +123,7 @@ function showNotification(message) {
         font-weight: 600;
     `;
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.animation = 'slideOutRight 0.5s ease-out';
         setTimeout(() => toast.remove(), 500);

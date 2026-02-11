@@ -1,19 +1,19 @@
 pipeline {
     agent any
-    
+
     environment {
         DOCKER_REGISTRY = 'docker.io'
         IMAGE_NAME = 'devops-ecommerce'
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        
+
         stage('Test') {
             parallel {
                 stage('Backend Tests') {
@@ -31,7 +31,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build Docker Images') {
             parallel {
                 stage('Build Frontend') {
@@ -50,13 +50,13 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Security Scan') {
             steps {
                 sh 'trivy image ${IMAGE_NAME}-backend:${IMAGE_TAG} || true'
             }
         }
-        
+
         stage('Push to Registry') {
             steps {
                 script {
@@ -67,7 +67,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f infrastructure/kubernetes/'
@@ -76,7 +76,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Pipeline completed successfully!'
