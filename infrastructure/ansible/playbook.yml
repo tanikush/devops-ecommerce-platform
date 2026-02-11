@@ -1,0 +1,73 @@
+---
+- name: Configure DevOps E-Commerce Server
+  hosts: webservers
+  become: yes
+  
+  vars:
+    docker_packages:
+      - docker
+      - docker-compose
+    
+  tasks:
+    - name: Update system packages
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == "RedHat"
+    
+    - name: Install Docker
+      yum:
+        name: "{{ docker_packages }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+    
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+    
+    - name: Create application directory
+      file:
+        path: /opt/devops-ecommerce
+        state: directory
+        mode: '0755'
+    
+    - name: Copy docker-compose file
+      copy:
+        src: ../../docker-compose.yml
+        dest: /opt/devops-ecommerce/docker-compose.yml
+        mode: '0644'
+    
+    - name: Pull Docker images
+      command: docker-compose pull
+      args:
+        chdir: /opt/devops-ecommerce
+    
+    - name: Start application
+      command: docker-compose up -d
+      args:
+        chdir: /opt/devops-ecommerce
+    
+    - name: Wait for application to be ready
+      wait_for:
+        port: 80
+        delay: 10
+        timeout: 60
+    
+    - name: Configure firewall
+      firewalld:
+        port: "{{ item }}"
+        permanent: yes
+        state: enabled
+      loop:
+        - 80/tcp
+        - 443/tcp
+        - 5000/tcp
+      when: ansible_os_family == "RedHat"

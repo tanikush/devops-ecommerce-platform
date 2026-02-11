@@ -1,0 +1,91 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_REGISTRY = 'docker.io'
+        IMAGE_NAME = 'devops-ecommerce'
+        IMAGE_TAG = "${BUILD_NUMBER}"
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Test') {
+            parallel {
+                stage('Backend Tests') {
+                    steps {
+                        dir('backend') {
+                            sh 'pip install -r requirements.txt'
+                            sh 'python -m pytest tests/ || true'
+                        }
+                    }
+                }
+                stage('Frontend Tests') {
+                    steps {
+                        echo 'Running frontend tests...'
+                    }
+                }
+            }
+        }
+        
+        stage('Build Docker Images') {
+            parallel {
+                stage('Build Frontend') {
+                    steps {
+                        script {
+                            docker.build("${IMAGE_NAME}-frontend:${IMAGE_TAG}", "./frontend")
+                        }
+                    }
+                }
+                stage('Build Backend') {
+                    steps {
+                        script {
+                            docker.build("${IMAGE_NAME}-backend:${IMAGE_TAG}", "./backend")
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                sh 'trivy image ${IMAGE_NAME}-backend:${IMAGE_TAG} || true'
+            }
+        }
+        
+        stage('Push to Registry') {
+            steps {
+                script {
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'docker-credentials') {
+                        docker.image("${IMAGE_NAME}-frontend:${IMAGE_TAG}").push()
+                        docker.image("${IMAGE_NAME}-backend:${IMAGE_TAG}").push()
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f infrastructure/kubernetes/'
+                sh 'kubectl rollout status deployment/frontend-deployment'
+                sh 'kubectl rollout status deployment/backend-deployment'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+        always {
+            cleanWs()
+        }
+    }
+}

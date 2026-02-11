@@ -1,0 +1,12 @@
+# GitLeaks Configuration - Secret Detection
+title = "DevSecOps E-Commerce Security"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist for false positives"
+paths = [
+    '''\.md$''',
+    '''\.txt$'''
+]
