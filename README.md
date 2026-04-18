@@ -136,37 +136,7 @@ This isn't just another DevOps project - it's a **complete DevSecOps implementat
 
 ### System Design
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        USERS                                │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│              AWS Load Balancer (ALB)                        │
-│              ✓ SSL/TLS Termination                          │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-         ┌───────────────┴───────────────┐
-         ▼                               ▼
-┌──────────────────┐            ┌──────────────────┐
-│   Frontend       │            │   Backend        │
-│   (Nginx)        │◄──────────►│   (Flask)        │
-│   Port: 80       │            │   Port: 5000     │
-│   ✓ Static Files │            │   ✓ REST APIs    │
-└──────────────────┘            └────────┬─────────┘
-                                         │
-                                         ▼
-                              ┌──────────────────┐
-                              │   PostgreSQL     │
-                              │   Database       │
-                              └──────────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│              MONITORING & SECURITY LAYER                    │
-│  Prometheus  │  Grafana  │  Trivy  │  GitLeaks             │
-└─────────────────────────────────────────────────────────────┘
-```
+<img width="1024" height="1536" alt="DevSecOps E-Commerce Platform" src="https://github.com/user-attachments/assets/eb4ca8e4-7521-4928-a608-7995271a71b6" />
 
 ---
 
