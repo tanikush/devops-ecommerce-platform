@@ -10,7 +10,8 @@
 
 ### 🚀 Production-Ready E-Commerce Platform with Enterprise-Grade Security
 
-*Showcasing Modern DevSecOps Practices | 5 Security Tools Integrated | Shift-Left Security Approach*
+*Showcasing Modern DevSecOps Practices | 5 Security Tools Integrated | Shift-Left Security Approach.*
+End-to-end DevSecOps project with secure CI/CD pipeline, Kubernetes deployment, Terraform IaC, and automated vulnerability scanning.
 
 [🔍 Live Demo](#) | [📖 Documentation](docs/) | [🐛 Report Bug](#) | [✨ Request Feature](#)
 
