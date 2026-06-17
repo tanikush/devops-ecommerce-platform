@@ -8,7 +8,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestrated-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 
-### 🚀 Production-Ready E-Commerce Platform with Enterprise-Grade Security
+### 🚀 Production-Ready E-Commerce Platform with Enterprise-Grades Security
 
 *Showcasing Modern DevSecOps Practices | 5 Security Tools Integrated | Shift-Left Security Approach.*
 End-to-end DevSecOps project with secure CI/CD pipeline, Kubernetes deployment, Terraform IaC, and automated vulnerability scanning.
@@ -19,7 +19,7 @@ End-to-end DevSecOps project with secure CI/CD pipeline, Kubernetes deployment, 
 
 ---
 
-## 🌟 Why This Project Stands Out
+## 🌟 Why This Projects Stands Out
 
 ```
 🔒 Security-First Approach    →  5 automated security scanners in CI/CD
@@ -141,7 +141,7 @@ This isn't just another DevOps project - it's a **complete DevSecOps implementat
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Starts
 
 ### ⚡ One-Command Setup
 
